@@ -6,9 +6,9 @@ from src.leilao.dominio import Usuario, Lance, Leilao
 class TestLeilao(TestCase):
 
     def setUp(self):
-        self.gui = Usuario('Gui')
-        self.yuri = Usuario('Yuri')
-        self.vini = Usuario('Vini')
+        self.gui = Usuario('Gui', 500.0)
+        self.yuri = Usuario('Yuri', 500.0)
+        self.vini = Usuario('Vini', 500.0)
 
         self.menor_valor_esperado = 100.0
         self.maior_valor_esperado = 150.0
@@ -46,14 +46,12 @@ class TestLeilao(TestCase):
         self.assertEqual(self.menor_valor_esperado, self.leilao.menor_lance)
         self.assertEqual(self.maior_valor_esperado, self.leilao.maior_lance)
 
-    # se o leilão não tiver lances, deve permitir propor um lance
     def test_deve_permitir_propor_lance_caso_o_leilao_nao_tenha_lances(self):
         self.leilao.propoe(self.lance_do_gui)
 
         quantidade_de_lance_recebido = len(self.leilao.lances)
         self.assertEqual(1, quantidade_de_lance_recebido)
 
-    # se o último usuário for diferente, deve permitir propor um lance
     def test_deve_permitir_propor_lance_caso_o_ultimo_usuario_seja_diferente(self):
         self.leilao.propoe(self.lance_do_vini)
         self.leilao.propoe(self.lance_do_gui)
@@ -66,5 +64,3 @@ class TestLeilao(TestCase):
         with self.assertRaises(ValueError):
             self.leilao.propoe(self.lance_do_gui)
             self.leilao.propoe(self.lance_do_gui)
-
-    # se o último usuário for o mesmo, não deve permitir propor um lance
