@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from src.leilao.dominio import Usuario, Lance, Leilao
+from src.leilao.excecoes import LanceInvalido
 
 
 class TestLeilao(TestCase):
@@ -28,7 +29,7 @@ class TestLeilao(TestCase):
 
     def test_nao_deve_permitir_propor_um_lance_em_ordem_decrescente(self):
 
-        with self.assertRaises(ValueError):
+        with self.assertRaises(LanceInvalido):
             self.leilao.propoe(self.lance_do_gui)
             self.leilao.propoe(self.lance_do_yuri)
 
@@ -61,6 +62,6 @@ class TestLeilao(TestCase):
 
     # se o último usuário for o mesmo, não deve permitir propor um lance
     def test_nao_deve_permitir_propor_lance_caso_o_ultimo_usuario_seja_igual(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(LanceInvalido):
             self.leilao.propoe(self.lance_do_gui)
             self.leilao.propoe(self.lance_do_gui)
